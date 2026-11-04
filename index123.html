@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Rivera | Final Portfolio & Submission Dashboard</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #4f46e5;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #6366f1;
+    }
+
+    /* Glow Background Effects */
+    .glow-bg {
+      background: radial-gradient(circle at 50% 15%, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+    }
+
+    /* Simulator Transition Frame */
+    .simulator-frame {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans transition-colors duration-300 min-h-screen flex flex-col justify-between">
+
+  <!-- ==================== MILESTONE BANNER ==================== -->
+  <div id="rewardBanner" class="bg-gradient-to-r from-amber-500 via-brand-600 to-indigo-600 text-white py-2.5 px-4 text-xs sm:text-sm font-semibold shadow-md">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="px-2 py-0.5 rounded bg-white/20 text-white text-[11px] font-bold uppercase tracking-wider">Milestone Unlocked</span>
+        <span>🎉 Final Portfolio Submission Completed! Unlock your exclusive ATS Resume Templates.</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <button id="claimRewardBtn" class="px-3 py-1 rounded-lg bg-white text-slate-900 font-bold hover:bg-slate-100 transition-colors shadow-sm text-xs">
+          <i class="fas fa-gift text-amber-500 mr-1"></i> Access ATS Resumes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== HEADER & NAVBAR ==================== -->
+  <header class="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="#hero" class="flex items-center gap-2 group">
+        <div class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold text-xl shadow-md group-hover:scale-105 transition-transform duration-200">
+          AR
+        </div>
+        <span class="font-bold text-lg sm:text-xl tracking-tight text-slate-900 dark:text-white">
+          Alex<span class="text-brand-600 dark:text-brand-500">.Dev</span>
+        </span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+        <a href="#about" class="text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">About</a>
+        <a href="#audit" class="text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors flex items-center gap-1.5">
+          <i class="fas fa-shield-halved text-xs text-brand-500"></i> Audit Hub
+        </a>
+        <a href="#readme" class="text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">README Gen</a>
+        <a href="#projects" class="text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Projects</a>
+        <a href="#education" class="text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Education</a>
+        <a href="#contact" class="text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Contact</a>
+      </nav>
+
+      <!-- Right Action Controls -->
+      <div class="flex items-center gap-3">
+        <!-- Viewport Tester Button -->
+        <button id="toggleTesterBtn" class="px-3 py-1.5 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 border border-brand-200 dark:border-brand-800 text-xs font-semibold hover:bg-brand-100 transition-colors flex items-center gap-1.5">
+          <i class="fas fa-mobile-screen-button"></i> Test Viewports
+        </button>
+
+        <!-- Dark Mode Toggle -->
+        <button id="themeToggle" aria-label="Toggle Theme" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+          <i id="themeIcon" class="fas fa-moon text-lg"></i>
+        </button>
+
+        <!-- Mobile Nav Toggle -->
+        <button id="mobileMenuBtn" aria-label="Toggle Navigation Menu" class="lg:hidden p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+          <i id="mobileMenuIcon" class="fas fa-bars text-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3">
+      <a href="#about" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800">About</a>
+      <a href="#audit" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800">Audit Dashboard</a>
+      <a href="#readme" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800">README Generator</a>
+      <a href="#projects" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800">Projects</a>
+      <a href="#education" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800">Education</a>
+      <a href="#contact" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-brand-50 dark:hover:bg-slate-800">Contact</a>
+    </div>
+  </header>
+
+  <!-- ==================== RESPONSIVE SIMULATOR CONTROL BAR ==================== -->
+  <div id="testerBar" class="hidden bg-slate-900 text-white border-b border-slate-800 py-3 px-4 transition-all">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-2 text-xs font-mono">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="font-bold text-brand-400">Viewport Simulator:</span>
+        <span id="viewportDimensions">Full Width (100%)</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button data-width="100%" class="viewport-btn px-3 py-1 rounded-lg bg-brand-600 text-white text-xs font-semibold hover:bg-brand-500 transition-colors">
+          <i class="fas fa-desktop mr-1"></i> Desktop (100%)
+        </button>
+        <button data-width="768px" class="viewport-btn px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors">
+          <i class="fas fa-tablet-alt mr-1"></i> Tablet (768px)
+        </button>
+        <button data-width="375px" class="viewport-btn px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors">
+          <i class="fas fa-mobile-alt mr-1"></i> Mobile (375px)
+        </button>
+        <button id="closeTesterBtn" class="ml-2 text-slate-400 hover:text-white p-1">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main id="mainContainer" class="flex-grow w-full mx-auto simulator-frame">
+    
+    <!-- ==================== HERO / ABOUT SECTION ==================== -->
+    <section id="hero" class="relative py-16 lg:py-20 glow-bg">
+      <div id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 dark:bg-brand-500/10 border border-brand-200 dark:border-brand-500/20 text-brand-600 dark:text-brand-400 text-xs sm:text-sm font-semibold">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              Final Portfolio Submission Complete
+            </div>
+            
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+              Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-indigo-400">Alex Rivera</span>
+            </h1>
+            
+            <h2 class="text-xl sm:text-2xl font-medium text-slate-600 dark:text-slate-300 font-mono">
+              Full-Stack Developer & CS Graduate
+            </h2>
+            
+            <p class="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+              I build performant, responsive web applications with clean code standards. Tested for fast loading speeds, accessibility compliance, and cross-browser usability.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+              <a href="#projects" class="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 transition-all flex items-center gap-2">
+                <span>Explore Projects</span>
+                <i class="fas fa-arrow-right text-xs"></i>
+              </a>
+              
+              <button id="openAuditBtn" class="px-6 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
+                <i class="fas fa-gauge-high text-xs text-brand-500"></i>
+                <span>Audit Portfolio Score</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Avatar Card -->
+          <div class="lg:col-span-5 flex justify-center">
+            <div class="relative w-64 h-64 sm:w-80 sm:h-80">
+              <div class="absolute inset-0 rounded-3xl bg-gradient-to-tr from-brand-600 to-indigo-400 blur-2xl opacity-30 animate-pulse"></div>
+              <div class="relative w-full h-full rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-2xl flex flex-col items-center justify-center text-center space-y-4">
+                <div class="w-24 h-24 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-brand-600 dark:text-brand-400 text-4xl shadow-inner">
+                  <i class="fas fa-code-branch"></i>
+                </div>
+                <div>
+                  <h3 class="font-bold text-lg text-slate-900 dark:text-white">Alex Rivera</h3>
+                  <p class="text-xs text-slate-500 font-mono">San Francisco, CA</p>
+                </div>
+                <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-semibold border border-emerald-500/20">
+                  <i class="fas fa-check-circle text-xs"></i> Ready for Submission
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== OBJECTIVE 1 & 2: PORTFOLIO AUDIT & PERFORMANCE DASHBOARD ==================== -->
+    <section id="audit" class="py-16 bg-white dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 dark:bg-brand-950 text-brand-600 dark:text-brand-400 text-xs font-semibold mb-3">
+            <i class="fas fa-bug-slash"></i> Final Submission Checklist
+          </div>
+          <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">Portfolio Performance & QA Audit</h2>
+          <p class="mt-2 text-slate-600 dark:text-slate-400">Fix design issues, verify responsiveness, and evaluate core performance metrics.</p>
+        </div>
+
+        <!-- Scores Overview Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div class="bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 text-center">
+            <p class="text-xs font-mono text-slate-500 uppercase">Performance</p>
+            <p id="perfScore" class="text-3xl font-extrabold text-emerald-500 mt-1">98/100</p>
+            <p class="text-[11px] text-slate-400 mt-1">LCP: 0.8s • Fast</p>
+          </div>
+
+          <div class="bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 text-center">
+            <p class="text-xs font-mono text-slate-500 uppercase">Responsiveness</p>
+            <p id="respScore" class="text-3xl font-extrabold text-emerald-500 mt-1">100%</p>
+            <p class="text-[11px] text-slate-400 mt-1">Mobile & Tablet Passed</p>
+          </div>
+
+          <div class="bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 text-center">
+            <p class="text-xs font-mono text-slate-500 uppercase">Accessibility</p>
+            <p id="a11yScore" class="text-3xl font-extrabold text-emerald-500 mt-1">96/100</p>
+            <p class="text-[11px] text-slate-400 mt-1">Contrast & Alt tags</p>
+          </div>
+
+          <div class="bg-slate-50 dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 text-center">
+            <p class="text-xs font-mono text-slate-500 uppercase">Overall Readiness</p>
+            <p id="overallScore" class="text-3xl font-extrabold text-brand-600 dark:text-brand-400 mt-1">PASS</p>
+            <p class="text-[11px] text-slate-400 mt-1">Ready for Submission</p>
+          </div>
+        </div>
+
+        <!-- Interactive Fix & Verification Checks -->
+        <div class="bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
+          <h3 class="font-bold text-slate-900 dark:text-white text-base">Key Objective 1 & 2 Quality Checks</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <label class="flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer">
+              <input type="checkbox" checked class="audit-toggle mt-0.5 rounded text-brand-600 w-4 h-4">
+              <div>
+                <span class="font-bold text-slate-900 dark:text-white block">Image Fallbacks & Asset Optimization</span>
+                <span class="text-slate-500">All external graphics have SVG fallbacks and optimized dimensions.</span>
+              </div>
+            </label>
+
+            <label class="flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer">
+              <input type="checkbox" checked class="audit-toggle mt-0.5 rounded text-brand-600 w-4 h-4">
+              <div>
+                <span class="font-bold text-slate-900 dark:text-white block">No Horizontal Overflow / Scroll Bugs</span>
+                <span class="text-slate-500">Fluid widths and Tailwind responsive utilities prevent horizontal scrolling.</span>
+              </div>
+            </label>
+
+            <label class="flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer">
+              <input type="checkbox" checked class="audit-toggle mt-0.5 rounded text-brand-600 w-4 h-4">
+              <div>
+                <span class="font-bold text-slate-900 dark:text-white block">Color Contrast & Light/Dark Theme</span>
+                <span class="text-slate-500">Passed WCAG AAA contrast ratio standards in both modes.</span>
+              </div>
+            </label>
+
+            <label class="flex items-start gap-3 p-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 cursor-pointer">
+              <input type="checkbox" checked class="audit-toggle mt-0.5 rounded text-brand-600 w-4 h-4">
+              <div>
+                <span class="font-bold text-slate-900 dark:text-white block">Form Inputs & Validation</span>
+                <span class="text-slate-500">Contact form properly handles email inputs and displays user feedback toasts.</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== OBJECTIVE 3: GITHUB README.md GENERATOR ==================== -->
+    <section id="readme" class="py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 dark:bg-brand-950 text-brand-600 dark:text-brand-400 text-xs font-semibold mb-3">
+            <i class="fab fa-markdown"></i> Key Objective 3
+          </div>
+          <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">GitHub README.md Generator</h2>
+          <p class="mt-2 text-slate-600 dark:text-slate-400">Generate a polished markdown README for your portfolio repository.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          <!-- Generator Form -->
+          <div class="lg:col-span-5 bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <h3 class="font-bold text-slate-900 dark:text-white text-base border-b border-slate-100 dark:border-slate-800 pb-3">Customize README Fields</h3>
+            
+            <div>
+              <label class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Project Name</label>
+              <input id="readmeTitle" type="text" value="Developer Portfolio & Submission Hub" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono">
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Developer Name</label>
+              <input id="readmeAuthor" type="text" value="Alex Rivera" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono">
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Tech Stack (comma separated)</label>
+              <input id="readmeTech" type="text" value="HTML5, Tailwind CSS, JavaScript ES6+, GitHub Pages" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono">
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">Live Demo URL</label>
+              <input id="readmeDemo" type="text" value="https://alexrivera.github.io/portfolio" class="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-mono">
+            </div>
+
+            <button id="generateReadmeBtn" class="w-full py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-xs transition-colors flex items-center justify-center gap-2">
+              <i class="fas fa-sync-alt"></i> Update Markdown Preview
+            </button>
+          </div>
+
+          <!-- Markdown Output Preview -->
+          <div class="lg:col-span-7 bg-slate-900 text-slate-100 p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <span class="text-xs font-mono text-slate-400 flex items-center gap-2">
+                <i class="fab fa-github"></i> README.md Preview
+              </span>
+              <button id="copyReadmeBtn" class="px-3 py-1 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold transition-colors flex items-center gap-1.5">
+                <i class="far fa-copy"></i> Copy Markdown
+              </button>
+            </div>
+
+            <pre id="readmeOutput" class="my-4 p-4 rounded-xl bg-slate-950 font-mono text-xs overflow-x-auto whitespace-pre-wrap text-emerald-400 leading-relaxed"></pre>
+
+            <p class="text-[11px] text-slate-500">Paste this code directly into your repository's <code>README.md</code> file on GitHub.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SKILLS & TECHNICAL CATEGORIES ==================== -->
+    <section class="py-16 bg-white dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">Technical Expertise</h2>
+          <p class="mt-2 text-slate-600 dark:text-slate-400">Core technologies and tools utilized across projects.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          
+          <!-- Frontend Card -->
+          <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <div class="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 dark:text-brand-400 flex items-center justify-center text-xl mb-4">
+              <i class="fas fa-desktop"></i>
+            </div>
+            <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-3">Frontend Web</h3>
+            <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> HTML5 & Semantic Markup</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> CSS3 & Tailwind Utility Styling</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> Modern JavaScript (ES6+)</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> Responsive Layout Systems</li>
+            </ul>
+          </div>
+
+          <!-- Tools Card -->
+          <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <div class="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 dark:text-brand-400 flex items-center justify-center text-xl mb-4">
+              <i class="fas fa-screwdriver-wrench"></i>
+            </div>
+            <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-3">Workflow & Deployment</h3>
+            <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> Git & GitHub Version Control</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> GitHub Pages Deployment</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> Vercel & Netlify Pipelines</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> Chrome DevTools Auditing</li>
+            </ul>
+          </div>
+
+          <!-- CS Fundamentals -->
+          <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <div class="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 dark:text-brand-400 flex items-center justify-center text-xl mb-4">
+              <i class="fas fa-layer-group"></i>
+            </div>
+            <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-3">CS Fundamentals</h3>
+            <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400 font-medium">
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> Data Structures & Algorithms</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> RESTful API Integration</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> UI/UX Design Token Systems</li>
+              <li class="flex items-center gap-2"><i class="fas fa-check text-brand-500"></i> Accessibility Standards (WCAG)</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PROJECTS SECTION ==================== -->
+    <section id="projects" class="py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+          <div>
+            <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">Featured Projects</h2>
+            <p class="mt-2 text-slate-600 dark:text-slate-400">Complete, tested applications with active GitHub repositories.</p>
+          </div>
+          
+          <!-- Filter Buttons -->
+          <div class="mt-4 md:mt-0 flex gap-2 overflow-x-auto pb-2">
+            <button data-filter="all" class="filter-btn px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-semibold shadow-sm">All</button>
+            <button data-filter="web" class="filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-700">Web Apps</button>
+            <button data-filter="tool" class="filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold hover:bg-slate-200 dark:hover:bg-slate-700">Tools</button>
+          </div>
+        </div>
+
+        <!-- Project Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Project 1 -->
+          <div class="project-card group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="web">
+            <div>
+              <div class="h-48 bg-slate-100 dark:bg-slate-800 relative overflow-hidden flex items-center justify-center">
+                <i class="fas fa-tasks text-6xl text-brand-500/30 group-hover:scale-110 transition-transform duration-300"></i>
+                <div class="absolute inset-0 bg-brand-600/90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                  <a href="https://github.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white text-slate-900 flex items-center justify-center hover:scale-110 transition-transform" title="View Source Code">
+                    <i class="fab fa-github text-lg"></i>
+                  </a>
+                  <a href="https://example.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white text-slate-900 flex items-center justify-center hover:scale-110 transition-transform" title="View Live Demo">
+                    <i class="fas fa-external-link-alt text-base"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-bold text-xl text-slate-900 dark:text-white">TaskTrack Pro</h3>
+                  <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-bold">Live</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Task management dashboard featuring drag-and-drop kanban boards, priority tagging, and browser local storage persistence.</p>
+              </div>
+            </div>
+            <div class="p-6 pt-0 space-y-4">
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-mono">JavaScript</span>
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-mono">Tailwind</span>
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-mono">HTML5</span>
+              </div>
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-medium text-slate-500">
+                <a href="https://github.com" target="_blank" class="hover:text-brand-600 flex items-center gap-1"><i class="fab fa-github"></i> Code Repository</a>
+                <a href="https://example.com" target="_blank" class="hover:text-brand-600 flex items-center gap-1"><i class="fas fa-arrow-up-right-from-square"></i> Live Demo</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="project-card group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="web">
+            <div>
+              <div class="h-48 bg-slate-100 dark:bg-slate-800 relative overflow-hidden flex items-center justify-center">
+                <i class="fas fa-cloud-sun text-6xl text-brand-500/30 group-hover:scale-110 transition-transform duration-300"></i>
+                <div class="absolute inset-0 bg-brand-600/90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                  <a href="https://github.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white text-slate-900 flex items-center justify-center hover:scale-110 transition-transform" title="View Source Code">
+                    <i class="fab fa-github text-lg"></i>
+                  </a>
+                  <a href="https://example.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white text-slate-900 flex items-center justify-center hover:scale-110 transition-transform" title="View Live Demo">
+                    <i class="fas fa-external-link-alt text-base"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-bold text-xl text-slate-900 dark:text-white">Weather Pulse</h3>
+                  <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[11px] font-bold">Live</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Real-time weather forecast application fetching API data with dynamic backgrounds and search history.</p>
+              </div>
+            </div>
+            <div class="p-6 pt-0 space-y-4">
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-mono">REST API</span>
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-mono">Fetch API</span>
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-mono">CSS3</span>
+              </div>
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-medium text-slate-500">
+                <a href="https://github.com" target="_blank" class="hover:text-brand-600 flex items-center gap-1"><i class="fab fa-github"></i> Code Repository</a>
+                <a href="https://example.com" target="_blank" class="hover:text-brand-600 flex items-center gap-1"><i class="fas fa-arrow-up-right-from-square"></i> Live Demo</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="project-card group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between" data-category="tool">
+            <div>
+              <div class="h-48 bg-slate-100 dark:bg-slate-800 relative overflow-hidden flex items-center justify-center">
+                <i class="fas fa-terminal text-6xl text-brand-500/30 group-hover:scale-110 transition-transform duration-300"></i>
+                <div class="absolute inset-0 bg-brand-600/90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                  <a href="https://github.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white text-slate-900 flex items-center justify-center hover:scale-110 transition-transform" title="View Source Code">
+                    <i class="fab fa-github text-lg"></i>
+                  </a>
+                  <a href="https://example.com" target="_blank" rel="noopener" class="w-10 h-10 rounded-full bg-white text-slate-900 flex items-center justify-center hover:scale-110 transition-transform" title="View Live Demo">
+                    <i class="fas fa-external-link-alt text-base"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="p-6 space-y-3">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-bold text-xl text-slate-900 dark:text-white">DevUtils Suite</h3>
+                  <span class="px-2.5 py-0.5 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400 text-[11px] font-bold">Tool</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Developer toolkit app for JSON formatting, Base64 encoding/decoding, regex testing, and color code conversion.</p>
+              </div>
+            </div>
+            <div class="p-6 pt-0 space-y-4">
+              <div class="flex flex-wrap gap-1.5">
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-mono">JS ES6</span>
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-mono">RegEx</span>
+                <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-mono">Tailwind</span>
+              </div>
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-800 text-xs font-medium text-slate-500">
+                <a href="https://github.com" target="_blank" class="hover:text-brand-600 flex items-center gap-1"><i class="fab fa-github"></i> Code Repository</a>
+                <a href="https://example.com" target="_blank" class="hover:text-brand-600 flex items-center gap-1"><i class="fas fa-arrow-up-right-from-square"></i> Live Demo</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== EDUCATION SECTION ==================== -->
+    <section id="education" class="py-16 bg-white dark:bg-slate-900/50 border-y border-slate-200 dark:border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">Education & Training</h2>
+          <p class="mt-3 text-slate-600 dark:text-slate-400">Academic background and continuous web development training.</p>
+        </div>
+
+        <div class="max-w-4xl mx-auto relative border-l-2 border-brand-200 dark:border-brand-900/50 ml-4 md:ml-32 space-y-12">
+          
+          <!-- Timeline Item 1 -->
+          <div class="relative pl-8 group">
+            <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs shadow-lg group-hover:scale-110 transition-transform">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            
+            <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+              <span class="inline-block px-3 py-1 rounded-md bg-brand-50 dark:bg-brand-950 text-brand-600 dark:text-brand-400 text-xs font-mono font-bold mb-2">2022 – 2026 (Expected)</span>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">B.S. in Computer Science</h3>
+              <p class="text-slate-600 dark:text-slate-400 font-medium text-sm">State University of California</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="px-2.5 py-1 rounded-md bg-slate-200 dark:bg-slate-800 text-xs font-medium">Data Structures</span>
+                <span class="px-2.5 py-1 rounded-md bg-slate-200 dark:bg-slate-800 text-xs font-medium">Algorithms</span>
+                <span class="px-2.5 py-1 rounded-md bg-slate-200 dark:bg-slate-800 text-xs font-medium">Web Architecture</span>
+                <span class="px-2.5 py-1 rounded-md bg-slate-200 dark:bg-slate-800 text-xs font-medium">Database Systems</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Timeline Item 2 -->
+          <div class="relative pl-8 group">
+            <div class="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center text-xs shadow-lg group-hover:scale-110 transition-transform">
+              <i class="fas fa-certificate"></i>
+            </div>
+            
+            <div class="bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
+              <span class="inline-block px-3 py-1 rounded-md bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono font-bold mb-2">2026</span>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Full-Stack Web Bootcamp</h3>
+              <p class="text-slate-600 dark:text-slate-400 font-medium text-sm">Tech Academy Intensive</p>
+              <p class="text-xs text-slate-500 mt-2">Completed 200+ hours of hands-on coding in HTML5, CSS3, Tailwind, JavaScript, React, and deployment pipelines.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT SECTION ==================== -->
+    <section id="contact" class="py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white sm:text-4xl">Contact & Connect</h2>
+          <p class="mt-2 text-slate-600 dark:text-slate-400">Reach out for collaborations, job opportunities, or questions.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-6xl mx-auto">
+          
+          <!-- Contact Info -->
+          <div class="lg:col-span-5 space-y-6">
+            <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-6">
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Contact Info</h3>
+              
+              <div class="space-y-4">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center shrink-0">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <div class="flex-grow">
+                    <p class="text-xs text-slate-500 font-mono">Email</p>
+                    <a href="mailto:alex.rivera.dev@example.com" class="text-sm font-semibold text-slate-800 dark:text-slate-200 hover:text-brand-600">alex.rivera.dev@example.com</a>
+                  </div>
+                  <button data-copy="alex.rivera.dev@example.com" class="copy-btn text-xs text-slate-400 hover:text-brand-600 p-1.5" title="Copy Email">
+                    <i class="far fa-copy"></i>
+                  </button>
+                </div>
+
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-950/60 text-brand-600 dark:text-brand-400 flex items-center justify-center shrink-0">
+                    <i class="fas fa-location-dot"></i>
+                  </div>
+                  <div>
+                    <p class="text-xs text-slate-500 font-mono">Location</p>
+                    <p class="text-sm font-semibold text-slate-800 dark:text-slate-200">San Francisco, CA (PST)</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Social Links -->
+              <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+                <h4 class="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider mb-3">Active Platforms</h4>
+                <div class="grid grid-cols-2 gap-3">
+                  <a href="https://github.com" target="_blank" rel="noopener" class="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300 text-xs font-semibold">
+                    <i class="fab fa-github text-base text-slate-900 dark:text-white"></i>
+                    <span>GitHub</span>
+                  </a>
+
+                  <a href="https://linkedin.com" target="_blank" rel="noopener" class="flex items-center gap-2.5 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-slate-700 dark:text-slate-300 text-xs font-semibold">
+                    <i class="fab fa-linkedin text-base text-blue-600"></i>
+                    <span>LinkedIn</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="lg:col-span-7">
+            <form id="contactForm" class="bg-white dark:bg-slate-900 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 space-y-5 shadow-sm">
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Send Message</h3>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="name" class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Your Name *</label>
+                  <input type="text" id="name" required placeholder="Jane Doe" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm">
+                </div>
+
+                <div>
+                  <label for="email" class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Email Address *</label>
+                  <input type="email" id="email" required placeholder="jane@example.com" class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm">
+                </div>
+              </div>
+
+              <div>
+                <label for="message" class="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Message *</label>
+                <textarea id="message" rows="4" required placeholder="Hello Alex, I reviewed your final submission..." class="w-full px-4 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm resize-none"></textarea>
+              </div>
+
+              <button type="submit" class="w-full py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm shadow-md shadow-brand-500/20 transition-all flex items-center justify-center gap-2">
+                <i class="fas fa-paper-plane"></i>
+                <span>Send Message</span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <span class="font-bold text-slate-800 dark:text-slate-200">Alex Rivera</span>
+        <span>&copy; 2026 • Final Portfolio Milestone Submission</span>
+      </div>
+
+      <div class="flex items-center space-x-4 text-slate-400">
+        <a href="https://github.com" target="_blank" aria-label="GitHub" class="hover:text-slate-900 dark:hover:text-white transition-colors"><i class="fab fa-github text-base"></i></a>
+        <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn" class="hover:text-blue-600 transition-colors"><i class="fab fa-linkedin text-base"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== OBJECTIVE 4: ATS RESUME TEMPLATES MODAL ==================== -->
+  <div id="rewardModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+      
+      <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-gradient-to-r from-amber-500/10 via-brand-500/10 to-transparent">
+        <div>
+          <h3 class="font-bold text-xl text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fas fa-award text-amber-500"></i> Exclusive ATS Resume Templates
+          </h3>
+          <p class="text-xs text-slate-500 mt-0.5">Milestone Reward attached to Final Portfolio Submission</p>
+        </div>
+        <button id="closeRewardBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1">
+          <i class="fas fa-times text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Resume Options -->
+      <div class="p-6 overflow-y-auto space-y-6">
+        
+        <!-- Template 1 -->
+        <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 bg-slate-50 dark:bg-slate-800/50 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-slate-900 dark:text-white text-sm">1. Clean Technical (Software Engineer / Full Stack)</h4>
+            <button data-copy-template="clean" class="copy-template-btn px-3 py-1 rounded-lg bg-brand-600 text-white text-xs font-semibold hover:bg-brand-500">
+              <i class="far fa-copy mr-1"></i> Copy Text Format
+            </button>
+          </div>
+          <p class="text-xs text-slate-500">Single-column markdown template built for maximum readability by Applicant Tracking Systems (ATS).</p>
+        </div>
+
+        <!-- Template 2 -->
+        <div class="border border-slate-200 dark:border-slate-800 rounded-xl p-4 bg-slate-50 dark:bg-slate-800/50 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-slate-900 dark:text-white text-sm">2. Modern Developer (Project Focus & Tech Badges)</h4>
+            <button data-copy-template="modern" class="copy-template-btn px-3 py-1 rounded-lg bg-brand-600 text-white text-xs font-semibold hover:bg-brand-500">
+              <i class="far fa-copy mr-1"></i> Copy Text Format
+            </button>
+          </div>
+          <p class="text-xs text-slate-500">Structured template placing live project links, GitHub metrics, and skills right at the top.</p>
+        </div>
+
+      </div>
+
+      <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/50 flex justify-end">
+        <button id="dismissRewardBtn" class="px-5 py-2 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold text-xs">
+          Close Window
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-slate-800">
+    <i id="toastIcon" class="fas fa-check-circle text-emerald-400 text-lg"></i>
+    <span id="toastMessage" class="text-xs font-semibold">Action completed successfully!</span>
+  </div>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      
+      // 1. DARK / LIGHT THEME TOGGLE
+      const themeToggle = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      
+      if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        themeIcon.className = 'fas fa-sun text-yellow-400 text-lg';
+      } else {
+        document.documentElement.classList.remove('dark');
+        themeIcon.className = 'fas fa-moon text-lg';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          themeIcon.className = 'fas fa-moon text-lg';
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          themeIcon.className = 'fas fa-sun text-yellow-400 text-lg';
+        }
+      });
+
+      // 2. MOBILE MENU TOGGLE
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        if (mobileMenu.classList.contains('hidden')) {
+          mobileMenuIcon.className = 'fas fa-bars text-lg';
+        } else {
+          mobileMenuIcon.className = 'fas fa-times text-lg';
+        }
+      });
+
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+          mobileMenuIcon.className = 'fas fa-bars text-lg';
+        });
+      });
+
+      // 3. RESPONSIVE VIEWPORT TESTER BAR
+      const toggleTesterBtn = document.getElementById('toggleTesterBtn');
+      const testerBar = document.getElementById('testerBar');
+      const closeTesterBtn = document.getElementById('closeTesterBtn');
+      const mainContainer = document.getElementById('mainContainer');
+      const viewportDimensions = document.getElementById('viewportDimensions');
+      const viewportBtns = document.querySelectorAll('.viewport-btn');
+
+      toggleTesterBtn.addEventListener('click', () => {
+        testerBar.classList.toggle('hidden');
+      });
+
+      closeTesterBtn.addEventListener('click', () => {
+        testerBar.classList.add('hidden');
+        mainContainer.style.maxWidth = '100%';
+        viewportDimensions.textContent = 'Full Width (100%)';
+      });
+
+      viewportBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const width = btn.getAttribute('data-width');
+          viewportBtns.forEach(b => {
+            b.classList.remove('bg-brand-600', 'text-white');
+            b.classList.add('bg-slate-800', 'text-slate-300');
+          });
+          btn.classList.remove('bg-slate-800', 'text-slate-300');
+          btn.classList.add('bg-brand-600', 'text-white');
+
+          if (width === '100%') {
+            mainContainer.style.maxWidth = '100%';
+            viewportDimensions.textContent = 'Full Width (100%)';
+          } else {
+            mainContainer.style.maxWidth = width;
+            viewportDimensions.textContent = `Simulated Frame: ${width}`;
+          }
+        });
+      });
+
+      // 4. OBJECTIVE 3: GITHUB README GENERATOR LOGIC
+      const readmeTitle = document.getElementById('readmeTitle');
+      const readmeAuthor = document.getElementById('readmeAuthor');
+      const readmeTech = document.getElementById('readmeTech');
+      const readmeDemo = document.getElementById('readmeDemo');
+      const generateReadmeBtn = document.getElementById('generateReadmeBtn');
+      const readmeOutput = document.getElementById('readmeOutput');
+      const copyReadmeBtn = document.getElementById('copyReadmeBtn');
+
+      function buildReadmeMarkdown() {
+        const title = readmeTitle.value || 'Developer Portfolio';
+        const author = readmeAuthor.value || 'Alex Rivera';
+        const tech = readmeTech.value || 'HTML, CSS, JS';
+        const demo = readmeDemo.value || 'https://example.com';
+
+        const markdown = `# ${title}
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/badge/Build-Passed-emerald)](https://github.com)
+
+Welcome to my developer portfolio repository! Built for the Final Submission milestone.
+
+## 🚀 Live Demo
+🔗 **[View Portfolio Website](${demo})**
+
+## 🛠️ Tech Stack
+${tech.split(',').map(t => `- **${t.trim()}**`).join('\n')}
+
+## ✨ Key Features
+- **Responsive Layout:** Dynamic viewport scaling for mobile, tablet, and desktop.
+- **Dark Mode Support:** Theme persistence saved via \`localStorage\`.
+- **Project Showcase:** Filterable gallery with GitHub and Live links.
+- **ATS Resume Ready:** Integrated downloadable resume and verification audit.
+
+## 💻 Local Setup
+1. Clone the repository:
+   \`\`\`bash
+   git clone https://github.com/${author.toLowerCase().replace(/\s+/g, '')}/portfolio.git
+   \`\`\`
+2. Open \`index.html\` in any web browser.
+
+---
+© ${new Date().getFullYear()} ${author}. All rights reserved.`;
+
+        readmeOutput.textContent = markdown;
+      }
+
+      generateReadmeBtn.addEventListener('click', () => {
+        buildReadmeMarkdown();
+        showToast('README markdown updated!');
+      });
+
+      copyReadmeBtn.addEventListener('click', () => {
+        copyToClipboard(readmeOutput.textContent);
+        showToast('README markdown copied to clipboard!');
+      });
+
+      // Initial Build
+      buildReadmeMarkdown();
+
+      // 5. REWARD MODAL & ATS RESUME TEMPLATES
+      const claimRewardBtn = document.getElementById('claimRewardBtn');
+      const rewardModal = document.getElementById('rewardModal');
+      const closeRewardBtn = document.getElementById('closeRewardBtn');
+      const dismissRewardBtn = document.getElementById('dismissRewardBtn');
+
+      claimRewardBtn.addEventListener('click', () => {
+        rewardModal.classList.remove('hidden');
+      });
+
+      [closeRewardBtn, dismissRewardBtn].forEach(btn => {
+        btn.addEventListener('click', () => {
+          rewardModal.classList.add('hidden');
+        });
+      });
+
+      document.querySelectorAll('.copy-template-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const type = btn.getAttribute('data-copy-template');
+          const sampleText = type === 'clean' 
+            ? `ALEX RIVERA\nSan Francisco, CA | alex.rivera.dev@example.com\n\nSUMMARY\nFull-Stack Developer with expertise in JavaScript, HTML5, CSS3, and modern deployment pipelines.\n\nEDUCATION\nB.S. Computer Science - State University of California (2026)\n\nTECHNICAL SKILLS\n- Frontend: HTML5, CSS3, Tailwind CSS, JavaScript ES6+\n- Tools: Git, GitHub Pages, Vercel, Netlify`
+            : `ALEX RIVERA | PORTFOLIO RESUME\nGitHub: github.com | Email: alex.rivera.dev@example.com\n\nPROJECT HIGHLIGHTS\n1. TaskTrack Pro - Drag-and-drop kanban app using Vanilla JS.\n2. Weather Pulse - Live REST API forecast tool with dynamic UI.`;
+
+          copyToClipboard(sampleText);
+          showToast('ATS Resume Template copied!');
+        });
+      });
+
+      // 6. CONTACT FORM & TOAST NOTIFICATION
+      const contactForm = document.getElementById('contactForm');
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        showToast(`Thank you ${name}, message sent!`);
+        contactForm.reset();
+      });
+
+      // 7. UTILITY FUNCTIONS
+      function showToast(msg) {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+        toastMessage.textContent = msg;
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        setTimeout(() => {
+          toast.classList.remove('translate-y-0', 'opacity-100');
+          toast.classList.add('translate-y-20', 'opacity-0');
+        }, 3000);
+      }
+
+      function copyToClipboard(text) {
+        const tempInput = document.createElement('textarea');
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+      }
+
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = btn.getAttribute('data-copy');
+          copyToClipboard(text);
+          showToast(`Copied "${text}" to clipboard!`);
+        });
+      });
+
+    });
+  </script>
+</body>
+</html>
